@@ -16,10 +16,28 @@ Pour ceux qui utilisent Arduino IDE, il faut supprimer la ligne 1 après le copi
 ## Montage
 [A compléter]
 
-### Sources / Documentation
+## Configuration
+### WiFi
+|Variable| Description                 |
+|------|-----------------------------|
+|ssid| Nom d'un réseau WiFi        |
+|password| Mot de passe du réseau WiFi |
+
+## Utilisation
+- Mettre le micro-contrôleur sous tension
+- Se connecter au réseau WiFi ayant le SSID configuré (Voir constante `ssid`). Entrer le mot de passe configuré (Voir constante `password`)
+- Depuis l'appareil connecté, ouvrir le navigateur et se rendre à l'adresse  `http://192.168.4.1/` pour afficher la page permettant de contrôler l'état du relais
+- Cliquer sur les liens OFF/ON pour changer l'état du relais
+
+## Sources / Documentation
 - ESP-01S RELAY MODULE - GoTronic
 https://www.gotronic.fr/art-module-relais-wifi-esp01-rel-34887.htm
 - Documentation ESP-01S
 https://www.gotronic.fr/pj-2714.pdf
 - Soft Access Point
   https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/soft-access-point-examples.html
+
+## TODO
+- Refacto code (ajouter fonctions setupWiFi, setupServer, handleClient, ...)
+- Utiliser ESPAsyncWebServer à la place de WifiServer
+

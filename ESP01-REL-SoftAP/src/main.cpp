@@ -1,8 +1,9 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 
-const char* ssid = "MeineWlanSSID"; // Enter your router or WiFi SSID here
-const char* password = "MeinWlanPasswort"; // Enter your rou-ter or WiFi password here
+const char* ssid = "ESP01"; // WiFi SSID
+const char* password = "password"; // WiFi password
+
 #define RELAY 0                     // connected to GPIO0
 WiFiServer server(80);
 
@@ -12,21 +13,15 @@ void setup() {
   pinMode(RELAY, OUTPUT);
   digitalWrite(RELAY, LOW);
 
-  // Connect to the WiFi network
-  Serial.println();
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-
-  WiFi.begin(ssid, password);
-
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
+  // Configure soft-AP
+  Serial.print("Setting soft-AP ... ");
+  boolean result = WiFi.softAP(ssid, password);
+  if (result == true){
+    Serial.println("Ready");
   }
-  Serial.println("");
-  Serial.println("WiFi connected");
+  else {
+    Serial.println("Failed!");
+  }
 
   // Start the Server
   server.begin();
@@ -35,7 +30,7 @@ void setup() {
   // Output of the IP address
   Serial.print("Use this URL to connect: ");
   Serial.print("https://");
-  Serial.print(WiFi.localIP());
+  Serial.print(WiFi.softAPIP());
   Serial.println("/");
 }
 
@@ -97,7 +92,7 @@ void loop() {
   else {
     client.print("ON");
   }
-  
+
   client.println("<br>");
   client.println("<a href=\"/RELAY=OFF\">OFF</a>");
   client.println("<a href=\"/RELAY=ON\">ON</a>");
